@@ -1,0 +1,6 @@
+{
+  "drop_percent": 15,
+  "window_seconds": 600,
+  "interval_seconds": 5,
+  "loops": 4
+}
