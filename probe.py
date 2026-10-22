@@ -8,11 +8,9 @@ with sync_playwright() as p:
     page.wait_for_load_state("load")
     body = page.inner_text("body")
     lines = [l.strip() for l in body.splitlines() if l.strip()]
-    print("kaisai lines:", [l for l in lines if "回" in l and "日" in l][:30])
-    clicks = page.eval_on_selector_all(
-        "a[onclick]",
-        "els => els.map(e => (e.getAttribute('onclick') || '').slice(0, 120))",
-    )
-    print("onclick count:", len(clicks))
-    print("onclick samples:", clicks[:5])
+    start = 0
+    for i, l in enumerate(lines):
+        if "オッズ" in l and "開催" in l:
+            start = i
+    print("body:", lines[start:start + 40])
     b.close()
