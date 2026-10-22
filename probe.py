@@ -6,11 +6,13 @@ with sync_playwright() as p:
     page.goto("https://jra.jp/", timeout=60000)
     page.get_by_role("link", name="オッズ", exact=True).first.click()
     page.wait_for_load_state("load")
-    print("url:", page.url)
-    print("title:", page.title())
-    texts = page.eval_on_selector_all(
-        "a",
-        "els => els.map(e => e.innerText.replace(/\\s+/g, ' ').trim()).filter(t => t)",
+    body = page.inner_text("body")
+    lines = [l.strip() for l in body.splitlines() if l.strip()]
+    print("kaisai lines:", [l for l in lines if "回" in l and "日" in l][:30])
+    clicks = page.eval_on_selector_all(
+        "a[onclick]",
+        "els => els.map(e => (e.getAttribute('onclick') || '').slice(0, 120))",
     )
-    print("links:", texts[:80])
+    print("onclick count:", len(clicks))
+    print("onclick samples:", clicks[:5])
     b.close()
