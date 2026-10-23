@@ -1,8 +1,8 @@
 {
   "kaisai": "4回東京8日",
-  "race": 1,
+  "races": [1, 2, 3],
   "drop_percent": 15,
   "window_seconds": 600,
   "interval_seconds": 30,
-  "loops": 4
+  "loops": 3
 }
