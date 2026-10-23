@@ -18,11 +18,14 @@ with sync_playwright() as p:
     page.wait_for_load_state("load")
     page.get_by_text("4回東京8日").first.click()
     page.wait_for_load_state("load")
-    show(page, "race list:", 40)
     try:
-        page.get_by_text("11R", exact=True).first.click(timeout=10000)
+        page.get_by_text("単勝複勝", exact=True).first.click(timeout=10000)
         page.wait_for_load_state("load")
-        show(page, "odds page:", 120)
+        show(page, "odds page:", 90)
+        tables = page.locator("table").all_inner_texts()
+        print("table count:", len(tables))
+        for t in tables[:3]:
+            print("table:", t.replace("\n", " | ")[:600])
     except Exception as e:
-        print("11R click failed:", str(e)[:200])
+        print("click failed:", str(e)[:200])
     b.close()
